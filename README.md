@@ -10,7 +10,7 @@ skills/<name>/SKILL.md   # one skill per directory; YAML frontmatter + body
 .claude/skills           # symlink to skills/ (Claude Code picks them up here)
 .agents/skills           # symlink to skills/ (Agent Skills convention: Codex, Copilot, ...)
 tests/                   # behavioral test harness (real-model A/B runs)
-install.sh               # install into ~/.claude/skills, ~/.agents/skills, ~/.codex/prompts
+install.sh               # install into ~/.claude/skills and/or ~/.agents/skills
 ```
 
 The SKILL.md body is plain markdown instructions with no Claude-specific
@@ -23,14 +23,16 @@ instructions file.
 git clone git@github.com:ysrkw/skills.git
 cd skills
 ./install.sh claude   # symlink into ~/.claude/skills (all Claude Code projects)
-./install.sh agents   # symlink into ~/.agents/skills (Codex, Copilot, ...)
-./install.sh codex    # copy bodies into ~/.codex/prompts as custom prompts
+./install.sh agents   # symlink into ~/.agents/skills (Codex etc.; "codex" is an alias)
 ./install.sh all
 ```
 
 In Claude Code, invoke a skill as `/<name>` (e.g. `/fable-mode`) at the start
-of a session. In Codex CLI, use the custom prompt of the same name. For other
-agents, paste the SKILL.md body into the system prompt or AGENTS.md.
+of a session. Codex reads Agent Skills natively — from `~/.agents/skills`
+(user-level) and from `.agents/skills` inside a repo — and activates them
+implicitly by description or explicitly via `$<name>`. For agents without
+Agent Skills support, paste the SKILL.md body into the system prompt or
+AGENTS.md.
 
 ## Skills
 

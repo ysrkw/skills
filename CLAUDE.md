@@ -8,13 +8,14 @@ A collection of agent skills. Each skill lives in `skills/<name>/SKILL.md`
 with YAML frontmatter (`name`, `description`). `.claude/skills` and
 `.agents/skills` are symlinks to `skills/`, so every skill here is directly
 usable in this repo by Claude Code and by Agent Skills-aware tools (Codex,
-Copilot); other machines install via `./install.sh [claude|agents|codex|all]`.
+Copilot); other machines install via `./install.sh [claude|agents|all]`
+(Codex reads `~/.agents/skills`, so "codex" is an alias for "agents").
 
 ## Conventions
 
 - Skill bodies are written in English and must stay free of Claude-specific
-  syntax — they are reused verbatim as Codex custom prompts and generic
-  system-prompt text (see install.sh, which strips only the frontmatter).
+  syntax — the same SKILL.md is read natively by Codex and other Agent
+  Skills-aware tools, and can be pasted as generic system-prompt text.
 - The frontmatter `description` must say both what the skill does and when to
   invoke it — it is the trigger text the model matches against.
 
