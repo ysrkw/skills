@@ -8,6 +8,7 @@
 # AGENTS.md in the throwaway workspace — Codex's native always-on
 # instructions file — so the A/B delta is exactly the skill text.
 # Results land in results/codex-<variant>/ and are graded by grade.sh.
+# Set RUN_TAG=r2 etc. to write to results/codex-<variant>-r2 instead.
 set -uo pipefail
 cd "$(dirname "$0")"
 
@@ -16,7 +17,7 @@ shift
 if [ "$#" -gt 0 ]; then CASES=("$@"); else CASES=($(ls cases)); fi
 
 SKILL_FILE="../skills/fable-mode/SKILL.md"
-OUT="results/codex-${VARIANT}"
+OUT="results/codex-${VARIANT}${RUN_TAG:+-$RUN_TAG}"
 mkdir -p "$OUT"
 
 for c in "${CASES[@]}"; do

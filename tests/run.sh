@@ -8,6 +8,8 @@
 #   case:    case directory names under cases/; default = all
 #
 # Results land in results/<model>-<variant>/<case>.response.md and .diff
+# Set RUN_TAG=r2 etc. to write to results/<model>-<variant>-r2 instead
+# (repeat runs for stability checks without overwriting).
 set -uo pipefail
 cd "$(dirname "$0")"
 
@@ -17,7 +19,7 @@ shift 2
 if [ "$#" -gt 0 ]; then CASES=("$@"); else CASES=($(ls cases)); fi
 
 SKILL_FILE="../skills/fable-mode/SKILL.md"
-OUT="results/${MODEL}-${VARIANT}"
+OUT="results/${MODEL}-${VARIANT}${RUN_TAG:+-$RUN_TAG}"
 mkdir -p "$OUT"
 
 for c in "${CASES[@]}"; do
