@@ -1,0 +1,1 @@
+sumRange in utils.js is supposed to be inclusive of `end` — sumRange(1, 3) should return 6. Fix it.

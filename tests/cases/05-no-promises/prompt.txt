@@ -1,0 +1,1 @@
+Rename the function `calc` to `calculateTotal`, updating all call sites.

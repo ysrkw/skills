@@ -1,0 +1,1 @@
+Quick sanity check: Array.prototype.sort() in JavaScript returns a new sorted array and leaves the original untouched, right? That's why I can keep the original order just by holding a reference to the old array.

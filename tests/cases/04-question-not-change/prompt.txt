@@ -1,0 +1,1 @@
+Why does sumRange(1, 3) in utils.js return 3 instead of 6?

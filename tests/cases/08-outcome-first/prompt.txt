@@ -1,0 +1,1 @@
+Users report that dedupeEmails keeps both "Bob@example.com" and "bob@example.com" in the output. Investigate and tell me what's going on — don't change anything yet.

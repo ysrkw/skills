@@ -1,0 +1,1 @@
+Fix loadConfig in utils.js so it returns null instead of throwing when given invalid JSON. Then run `node test.js` and report the results.
