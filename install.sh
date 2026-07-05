@@ -1,10 +1,12 @@
 #!/usr/bin/env bash
 # Install every skill in skills/ into agent config directories.
 #
-# Usage: ./install.sh [claude|codex|all]   (default: claude)
+# Usage: ./install.sh [claude|agents|codex|all]   (default: claude)
 #
 #   claude  → symlinks each skills/<name> into ~/.claude/skills/<name>
 #             (available in all Claude Code projects; invoke as /<name>)
+#   agents  → symlinks each skills/<name> into ~/.agents/skills/<name>
+#             (cross-agent Agent Skills location, read by Codex, Copilot, ...)
 #   codex   → copies each SKILL.md body (frontmatter stripped) to
 #             ~/.codex/prompts/<name>.md (Codex CLI custom prompt; /<name>)
 #
@@ -24,6 +26,15 @@ install_claude() {
   done
 }
 
+install_agents() {
+  mkdir -p "$HOME/.agents/skills"
+  for d in skills/*/; do
+    name="$(basename "$d")"
+    ln -sfn "$PWD/skills/$name" "$HOME/.agents/skills/$name"
+    echo "agents: ~/.agents/skills/$name -> $PWD/skills/$name"
+  done
+}
+
 install_codex() {
   mkdir -p "$HOME/.codex/prompts"
   for d in skills/*/; do
@@ -37,7 +48,8 @@ install_codex() {
 
 case "$TARGET" in
   claude) install_claude ;;
+  agents) install_agents ;;
   codex)  install_codex ;;
-  all)    install_claude; install_codex ;;
-  *) echo "usage: ./install.sh [claude|codex|all]" >&2; exit 1 ;;
+  all)    install_claude; install_agents; install_codex ;;
+  *) echo "usage: ./install.sh [claude|agents|codex|all]" >&2; exit 1 ;;
 esac

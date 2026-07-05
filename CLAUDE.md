@@ -5,9 +5,10 @@ This file provides guidance to Claude Code (claude.ai/code) when working with co
 ## What this repository is
 
 A collection of agent skills. Each skill lives in `skills/<name>/SKILL.md`
-with YAML frontmatter (`name`, `description`). `.claude/skills` is a symlink
-to `skills/`, so every skill here is directly usable in this repo; other
-machines install via `./install.sh [claude|codex|all]`.
+with YAML frontmatter (`name`, `description`). `.claude/skills` and
+`.agents/skills` are symlinks to `skills/`, so every skill here is directly
+usable in this repo by Claude Code and by Agent Skills-aware tools (Codex,
+Copilot); other machines install via `./install.sh [claude|agents|codex|all]`.
 
 ## Conventions
 

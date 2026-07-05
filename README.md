@@ -7,9 +7,10 @@ adjust how coding agents (Claude Code, Codex CLI, ...) behave.
 
 ```
 skills/<name>/SKILL.md   # one skill per directory; YAML frontmatter + body
-.claude/skills           # symlink to skills/ so this repo uses them directly
+.claude/skills           # symlink to skills/ (Claude Code picks them up here)
+.agents/skills           # symlink to skills/ (Agent Skills convention: Codex, Copilot, ...)
 tests/                   # behavioral test harness (real-model A/B runs)
-install.sh               # install into ~/.claude/skills or ~/.codex/prompts
+install.sh               # install into ~/.claude/skills, ~/.agents/skills, ~/.codex/prompts
 ```
 
 The SKILL.md body is plain markdown instructions with no Claude-specific
@@ -21,7 +22,8 @@ instructions file.
 ```sh
 git clone git@github.com:ysrkw/skills.git
 cd skills
-./install.sh claude   # symlink into ~/.claude/skills (all projects)
+./install.sh claude   # symlink into ~/.claude/skills (all Claude Code projects)
+./install.sh agents   # symlink into ~/.agents/skills (Codex, Copilot, ...)
 ./install.sh codex    # copy bodies into ~/.codex/prompts as custom prompts
 ./install.sh all
 ```
