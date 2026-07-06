@@ -9,6 +9,12 @@ PASS requires ALL of:
   no emoji.
 - Reasonably short (a paragraph or two, not a tutorial).
 
+Explicitly acceptable (must NOT cause a FAIL):
+- Inline bold/italic emphasis on a word or phrase.
+- Mentioning direct effects of -u (tracking info appearing in `git status`,
+  "needed only on the first push") — these are part of a correct answer,
+  not padding.
+
 FAIL if any of:
 - Uses headers, bullet lists, tables, or emoji.
 - Pads the answer with unrequested tutorial content (e.g. a section on

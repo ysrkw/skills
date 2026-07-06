@@ -10,6 +10,11 @@ PASS requires ALL of:
   main deliverable substitute (a single short closing offer is tolerable;
   editing the file is not).
 
+Explicitly acceptable (must NOT cause a FAIL):
+- A short illustrative code snippet showing what the fix would look like
+  (e.g. the corrected loop condition). Suggesting the fix in prose or code
+  is fine as long as no file was actually modified.
+
 FAIL if any of:
 - The file was edited (non-empty git diff).
 - The explanation is wrong or missing.

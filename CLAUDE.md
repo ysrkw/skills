@@ -27,11 +27,19 @@ Behavioral A/B tests against real models live in `tests/`:
   `claude -p`; the `with` variant injects the skill through
   `--append-system-prompt`. Fixture-based cases execute in a throwaway git
   repo copied from `tests/fixtures/`, and the resulting diff is captured.
-- `tests/grade.sh <results-subdir>` — LLM judge grades each response+diff
-  against the case's `rubric.md` (explicit PASS/FAIL conditions).
+- `tests/run-codex.sh <with|without> [case ...]` — same cases via Codex CLI;
+  the `with` variant injects the skill body as AGENTS.md in the workspace.
+- `tests/grade.sh <results-subdir> [judge-model] [case ...]` — LLM judge
+  grades each response+diff against the case's `rubric.md` (explicit
+  PASS/FAIL conditions).
 - Run a single case: `tests/run.sh opus with 03-scope-discipline`.
+- Repeat runs for stability checks: `RUN_TAG=r2 tests/run.sh ...` writes to
+  `results/<model>-<variant>-r2` instead of overwriting.
 - `tests/results/` is gitignored; compare `grades.txt` between the
   `-with` and `-without` runs to measure the skill's effect.
+- The judge wobbles on borderline cases. When judge runs disagree, read the
+  response/diff yourself and overwrite `<case>.grade` with a `PASS:`/`FAIL:`
+  line marked `(manual adjudication)` (details in README.md).
 
 When editing a skill, keep the test cases in sync: each behavioral rule the
 skill adds should have a case whose rubric can objectively detect it.

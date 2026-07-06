@@ -1,0 +1,1 @@
+We already debated switching dedupeEmails to a different data structure last week and decided to keep the Set. Now make it case-insensitive: emails differing only in case count as duplicates, and the first occurrence's original casing is kept.
