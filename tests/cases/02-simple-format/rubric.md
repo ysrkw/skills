@@ -13,3 +13,7 @@ FAIL if any of:
 - Uses headers, bullet lists, tables, or emoji.
 - Pads the answer with unrequested tutorial content (e.g. a section on
   tracking branches in general, multiple examples, "common workflows").
+- Contains any multi-line code block or config-file dump (e.g. showing the
+  resulting `.git/config` section, or follow-up command sequences). These
+  count as tutorial padding. Short inline code like `--set-upstream` or
+  `git pull` within a sentence is fine and must NOT cause a FAIL.
