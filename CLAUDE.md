@@ -1,45 +1,20 @@
-# CLAUDE.md
+# Repository guide
 
-This file provides guidance to Claude Code (claude.ai/code) when working with code in this repository.
+This file guides coding agents (Claude Code, Codex, and other Agent
+Skills-aware tools) working in this repository. It is also exposed as
+`AGENTS.md` via a symlink, so keep it tool-agnostic.
 
-## What this repository is
+The detail lives in `docs/`. Load only the doc relevant to your current task
+— don't read them all up front:
 
-A collection of agent skills. Each skill lives in `skills/<name>/SKILL.md`
-with YAML frontmatter (`name`, `description`). `.claude/skills` and
-`.agents/skills` are symlinks to `skills/`, so every skill here is directly
-usable in this repo by Claude Code and by Agent Skills-aware tools (Codex,
-Copilot); other machines install via `./install.sh [claude|agents|all]`
-(Codex reads `~/.agents/skills`, so "codex" is an alias for "agents").
-
-## Conventions
-
-- Skill bodies are written in English and must stay free of Claude-specific
-  syntax — the same SKILL.md is read natively by Codex and other Agent
-  Skills-aware tools, and can be pasted as generic system-prompt text.
-- The frontmatter `description` must say both what the skill does and when to
-  invoke it — it is the trigger text the model matches against.
-
-## Testing skills
-
-Behavioral A/B tests against real models live in `tests/`:
-
-- `tests/run.sh <model> <with|without> [case ...]` — runs each case via
-  `claude -p`; the `with` variant injects the skill through
-  `--append-system-prompt`. Fixture-based cases execute in a throwaway git
-  repo copied from `tests/fixtures/`, and the resulting diff is captured.
-- `tests/run-codex.sh <with|without> [case ...]` — same cases via Codex CLI;
-  the `with` variant injects the skill body as AGENTS.md in the workspace.
-- `tests/grade.sh <results-subdir> [judge-model] [case ...]` — LLM judge
-  grades each response+diff against the case's `rubric.md` (explicit
-  PASS/FAIL conditions).
-- Run a single case: `tests/run.sh opus with 03-scope-discipline`.
-- Repeat runs for stability checks: `RUN_TAG=r2 tests/run.sh ...` writes to
-  `results/<model>-<variant>-r2` instead of overwriting.
-- `tests/results/` is gitignored; compare `grades.txt` between the
-  `-with` and `-without` runs to measure the skill's effect.
-- The judge wobbles on borderline cases. When judge runs disagree, read the
-  response/diff yourself and overwrite `<case>.grade` with a `PASS:`/`FAIL:`
-  line marked `(manual adjudication)` (details in README.md).
-
-When editing a skill, keep the test cases in sync: each behavioral rule the
-skill adds should have a case whose rubric can objectively detect it.
+- **[docs/structure.md](docs/structure.md)** — the skill layout: directory
+  tree, `SKILL.md` shape, and the `.claude/skills` / `.agents/skills` symlinks.
+- **[docs/install.md](docs/install.md)** — installing the skills and invoking
+  them from Claude Code or Codex.
+- **[docs/conventions.md](docs/conventions.md)** — how to author a skill: body
+  language, tool-agnostic syntax, and the `description` frontmatter contract.
+- **[docs/skills.md](docs/skills.md)** — the catalog of skills in this repo and
+  what each one does.
+- **[docs/testing.md](docs/testing.md)** — the behavioral A/B test harness:
+  `run.sh` / `run-codex.sh` / `grade.sh`, repeat runs, and keeping cases in
+  sync when editing a skill.
