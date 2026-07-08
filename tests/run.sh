@@ -24,21 +24,23 @@ mkdir -p "$OUT"
 
 for c in "${CASES[@]}"; do
   echo "=== $c ($MODEL/$VARIANT)"
-  work="$(mktemp -d)"
+  work="$(mktemp -d)" || { echo "  ABORT: mktemp failed"; exit 1; }
   if [ -f "cases/$c/fixture" ]; then
     cp -R "fixtures/$(cat "cases/$c/fixture")/." "$work/"
   fi
   git -C "$work" init -q
   git -C "$work" -c user.email=test@test -c user.name=test add -A
-  git -C "$work" -c user.email=test@test -c user.name=test commit -qm base --allow-empty
+  git -C "$work" -c user.email=test@test -c user.name=test -c commit.gpgsign=false \
+    commit -qm base --allow-empty
 
-  args=(-p --model "$MODEL" --dangerously-skip-permissions)
+  args=(-p --model "$MODEL" --dangerously-skip-permissions --strict-mcp-config)
   if [ "$VARIANT" = "with" ]; then
     args+=(--append-system-prompt "$(cat "$SKILL_FILE")")
   fi
 
   prompt="$(cat "cases/$c/prompt.txt")"
-  (cd "$work" && env -u CLAUDECODE -u CLAUDE_CODE_ENTRYPOINT claude "${args[@]}" "$prompt") \
+  (cd "$work" && env -u CLAUDECODE -u CLAUDE_CODE_ENTRYPOINT \
+    CLAUDE_CODE_DISABLE_NONESSENTIAL_TRAFFIC=1 claude "${args[@]}" "$prompt") \
     > "$OUT/$c.response.md" 2> "$OUT/$c.err" || echo "  RUN FAILED (see $OUT/$c.err)"
 
   git -C "$work" add -A
